@@ -64,7 +64,16 @@ def super_list(request):
         return Response(serializer.data, status = status.HTTP_201_CREATED)
 
 
+@api_view(['GET'])
+def super_detail(request, pk):
 
+    try:
+        super = Super.objects.get(pk = pk)
+        serializer = SuperSerializer(super)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+
+    except Super.DoesNotExist:
+        return Response(status = status.HTTP_204_NO_CONTENT)
 
 
 
