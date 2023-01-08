@@ -86,6 +86,7 @@ def super_list(request):
 
 
 
+
 # class SuperList(APIView):
 #     def get(self, request):
 #         supers = Super.objects.all()
