@@ -64,28 +64,23 @@ def super_list(request):
         return Response(serializer.data, status = status.HTTP_201_CREATED)
 
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def super_detail(request, pk):
 
     super = get_object_or_404(Super, pk = pk)
-    # try:
-    #     super = Super.objects.get(pk = pk)
-    #     serializer = SuperSerializer(super)
-    #     return Response(serializer.data, status = status.HTTP_200_OK)
-
-    # except Super.DoesNotExist:
-    #     return Response(status = status.HTTP_204_NO_CONTENT)
-
-
     if request.method == 'GET':
         serializer = SuperSerializer(super)
-        return Response(serializer.data)
+        return Response(serializer.data, status = status.HTTP_200_OK)
 
     elif request.method == 'PUT':
         serializer = SuperSerializer(super, data = request.data)
         serializer.is_valid(raise_exception = True)
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+
+    elif request.method == 'DELETE':
+        super.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
 
 
 
